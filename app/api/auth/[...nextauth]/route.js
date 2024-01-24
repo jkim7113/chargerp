@@ -4,7 +4,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import User from "@models/user";
 import { connectToDB } from "@utils/db";
 
-const handler = NextAuth({
+export const config = 
+{
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_ID,
@@ -42,6 +43,7 @@ const handler = NextAuth({
             }
         }
     },
-});
+}
+const handler = NextAuth(config);
 
 export { handler as GET, handler as POST };

@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
 
-const Form = ({ type, post, setPost, submitting, handler }) => {
+const Form = ({ title, post, setPost, submitting, handler }) => {
   return (
     <section className='w-full max-width-full flex-start flex-col'>
       <h1 className='head_text text-left'>
-        <span className='blue_gradient'>{type} a question</span>
+        <span className='blue_gradient'>{title}</span>
       </h1>
       <form className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism' onSubmit={handler}>
         <label>

@@ -19,7 +19,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className='flex-between w-full mb-16 pt-3'>
+    <nav className='z-20 backdrop-blur-xl bg-white/70 fixed top-0 z-20 max-w-7xl mx-auto sm:px-16 px-6 flex-between w-full py-3'>
       <Link href='/' className='flex gap-2 flex-center'>
         <Image className='object-contain' src='/images/centennial.svg' alt="Centennial Logo" width={30} height={30} />
         <p className='ml-2 logo_text'>Centennial Peer Tutoring Club</p>

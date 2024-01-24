@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { useSession, signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 import Form from '@components/Form';
 
 const page = () => {
     const router = useRouter();
+    const params = useParams();
+    const questionId = params.id;
     const { data: session } = useSession();
 
     const [submitting, setSubmitting] = useState(false);
@@ -18,19 +20,30 @@ const page = () => {
     });
 
     useEffect(() => {
-        if (!session?.user) signIn();
-    }, [])
+        if (!session?.user) return signIn();
+        async function fetchQuestion() {
+            const response = await fetch(`/api/questions/${questionId}`);
+            const data = await response.json();
 
-    async function createPost(e){
+            setPost({
+                title: data.title,
+                body: data.body,
+                tag: data.tag,
+            });
+        }
+        if (questionId) fetchQuestion();
+    }, [questionId]);
+
+    async function updatePost(e){
         e.preventDefault();
         setSubmitting(true);
 
+        if (!questionId) return alert("Question ID not found");
         try {
-            const response = await fetch('/api/questions', {
-                method: "POST",
+            const response = await fetch(`/api/questions/${questionId}`, {
+                method: "PATCH",
                 body: JSON.stringify({
                     title: post.title,
-                    userId: session?.user.id,
                     body: post.body,
                     tag: post.tag,
                 }),
@@ -46,7 +59,7 @@ const page = () => {
         }
     }
   return (
-    <Form title="Ask a question" post={post} setPost={setPost} submitting={submitting} handler={createPost}>
+    <Form title="Edit your question" post={post} setPost={setPost} submitting={submitting} handler={updatePost}>
 
     </Form>
   )

@@ -1,7 +1,6 @@
 import { connectToDB } from "@utils/db";
 import Question from "@models/question";
 
-
 export async function GET(req) {
     try {
         await connectToDB();
