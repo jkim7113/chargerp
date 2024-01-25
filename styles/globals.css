@@ -26,9 +26,9 @@
   width: 100%;
   height: 100%;
   top: 0;
-} */
+} 
 
-/* .main:after {
+.main:after {
   content: "";
   background-image: url("/assets/images/grid.svg");
   z-index: 1;
@@ -38,7 +38,7 @@
   top: 0;
   opacity: 0.4;
   filter: invert(1);
-} */
+}  */
 
 .gradient {
   height: fit-content;
@@ -74,7 +74,7 @@
 /* Tailwind Styles */
 
 .app {
-  @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
+  @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6 min-h-screen;
 }
 
 .black_btn {
@@ -132,7 +132,7 @@
 
 /* Form Component */
 .form_textarea {
-  @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply w-full flex rounded-lg h-[128px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 
 .form_input {
@@ -155,6 +155,14 @@
 /* PromptCard Component */
 .prompt_card {
   @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
+}
+
+.signin {
+  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-6 backdrop-blur-lg backdrop-filter sm:w-[480px] w-full max-h-80 -mt-[128px];
+}
+
+.signin_btn {
+  @apply flex my-1 w-full border border-gray-300 rounded-lg p-3 text-gray-700 transition-all delay-75 hover:bg-gray-100 hover:text-gray-600;
 }
 
 .flex-center {

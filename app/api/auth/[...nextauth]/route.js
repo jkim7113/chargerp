@@ -41,7 +41,10 @@ export const config =
                 console.log(error);
                 return false;
             }
-        }
+        },
+        async redirect(){
+            return "/";
+        },
     },
 }
 const handler = NextAuth(config);

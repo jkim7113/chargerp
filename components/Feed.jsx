@@ -25,12 +25,11 @@ const Feed = () => {
 
   function handleTagClick(tagName) {
     setSearchText(tagName);
-
   };
 
   useEffect(() => {
     async function fetchPosts() {
-      const response = await fetch('/api/questions');
+      const response = await fetch('/api/questions', { next: { revalidate: 60 } });
       const data = await response.json();
 
       setPosts(data);
