@@ -55,7 +55,10 @@ const Nav = () => {
               )}
             </div>
           ) : (
-            <Link className='blue_btn' href='/auth/signin'>Sign In</Link>
+            <>
+              <Link className="outline_btn mr-2" href="https://forms.gle/VpxgiZrtj9yoxYkc9">Become a Tutor</Link>
+              <Link className='blue_btn' href='/auth/signin'>Sign In</Link>
+            </>
           )
         }
       </div>
