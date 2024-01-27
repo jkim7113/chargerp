@@ -16,7 +16,7 @@ function TagInput({ post, setPost }) {
 
   useEffect(() => {
     setSelected(post.tag);
-  }, []);
+  }, [post.tag]);
 
   useEffect(() => {
     if (tag.length < 2) return setRecommendations([]);
@@ -54,7 +54,7 @@ function TagInput({ post, setPost }) {
      </div>
      <div className='w-full mt-4'>
         {
-          selected.map((s) => (
+          selected && selected.map((s) => (
             <span className='subject_selected' onClick={handleDelete} key={s}>{s}</span>
           ))
         }
