@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react'
-import { useSession, signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
 
 import Form from '@components/Form';
@@ -10,7 +10,7 @@ const page = () => {
     const router = useRouter();
     const params = useParams();
     const questionId = params.id;
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
@@ -20,7 +20,10 @@ const page = () => {
     });
 
     useEffect(() => {
-        if (!session?.user) return signIn();
+        if (status === "unauthenticated") router.push('/auth/signin');
+    }, [status]);
+
+    useEffect(() => {
         async function fetchQuestion() {
             const response = await fetch(`/api/questions/${questionId}`);
             const data = await response.json();

@@ -14,7 +14,6 @@ export async function GET(req) {
 
 export async function POST(req) {
     const { userId, title, body, tag } = await req.json();
-
     try {
          await connectToDB();
          const newQuestion = new Question({

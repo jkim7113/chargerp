@@ -14,7 +14,7 @@ const QuestionSchema = new Schema({
         required: [true, 'Body is required! Please fill in the details section.']
     },
     tag: {
-        type: String,
+        type: [String],
         required: [true, 'Tag is required!']
     },
 });

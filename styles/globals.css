@@ -93,6 +93,10 @@
   @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
 }
 
+.subject_selected {
+  @apply font-satoshi text-white text-sm px-3 py-2 mx-1 rounded-full border border-blue-600 blue_gradient transition-all duration-75 hover:bg-clip-border hover:text-gray-100;
+}
+
 .orange_gradient {
   @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
 }
