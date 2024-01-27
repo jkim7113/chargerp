@@ -1,11 +1,11 @@
 import { connectToDB } from "@utils/db";
 import Question from "@models/question";
 import { getServerSession } from "next-auth";
-import { config } from "@app/api/auth/[...nextauth]/route";
+import { authConfig } from "@app/api/auth/[...nextauth]/route";
 
 
 export async function GET(req, { params }) {
-    const session = await getServerSession(config);
+    const session = await getServerSession(authConfig);
     if (!session) return new Response("You must be logged in.", { status: 401 });
     try {
         await connectToDB();
@@ -19,7 +19,7 @@ export async function GET(req, { params }) {
 }
 
 export async function PATCH(req, { params }) {
-    const session = await getServerSession(config);
+    const session = await getServerSession(authConfig);
     const { title, body, tag } = await req.json();
     
     if (!session) return new Response("You must be logged in.", { status: 401 });
@@ -42,7 +42,7 @@ export async function PATCH(req, { params }) {
 }
 
 export async function DELETE(req, { params }) {
-    const session = await getServerSession(config);
+    const session = await getServerSession(authConfig);
     if (!session) return new Response("You must be logged in.", { status: 401 });
     try {
         await connectToDB();
