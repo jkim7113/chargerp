@@ -1,53 +1,26 @@
-'use client';
-
-import { useState, useEffect } from 'react'
 import QuestionCard from './QuestionCard';
+import SearchBar from './SearchBar';
 
-const CardList = ({ data, handleTagClick }) => {
+const CardList = ({ data }) => {
   return (
     <div className='mt-16 prompt_layout'>
       {
         data.map((post) => (
-          <QuestionCard key={post._id} post={post} handleTagClick={handleTagClick}/>
+          <QuestionCard key={post._id} post={post} />
         ))
       }
     </div>
   )
 }
 
-const Feed = () => {
-  const [searchText, setSearchText] = useState('');
-  const [posts, setPosts] = useState([]);
+const Feed = async () => {
+  const response = await fetch('https://www.chargerpeer.com/api/questions', { next: { revalidate: 60 } });
+  const data = await response.json();
 
-  function handler(e) {
-    e.preventDefault();
-  }
-
-  function handleTagClick(tagName) {
-    setSearchText(tagName);
-  };
-
-  useEffect(() => {
-    async function fetchPosts() {
-      const response = await fetch('/api/questions', { next: { revalidate: 60 } });
-      const data = await response.json();
-
-      setPosts(data);
-    }
-    fetchPosts();
-  }, []);
   return (
     <section className='feed'>
-      <form className='relative w-full flex-center'>
-        <input className='search_input peer' 
-          type='text' v
-          alue={searchText} 
-          placeholder='Search for questions already posted by other students' 
-          required 
-          onChange={handler}>
-        </input>
-      </form>
-      <CardList data={posts} handleTagClick={handleTagClick}/>
+      <SearchBar />
+      <CardList data={data} />
     </section>
   )
 }
