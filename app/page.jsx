@@ -1,5 +1,4 @@
 import Feed from "@components/Feed";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -13,10 +12,6 @@ export default function Home() {
         <Link className='text-blue-600' href='/auth/signin'>Sign in</Link> with your school account and start exploring
       </p>
       <Feed /> 
-      <div className="flex flex-center flex-wrap mt-5">
-        <Image className='mx-3 max-sm:mt-4' src='/images/flyer0.webp' width={540} height={720} alt='flyer' />
-        <Image className='mx-3 max-sm:mt-4' src='/images/flyer1.webp' width={540} height={720} alt='flyer' />
-      </div>
     </section>
   );
 }
