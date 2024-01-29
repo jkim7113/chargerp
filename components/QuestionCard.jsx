@@ -21,12 +21,18 @@ const QuestionCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
         </div>
       </div>
       <p className='my-4 font-satoshi text-sm text-gray-700'>{post.prompt}</p>
-      <p
-        className='font-inter text-sm blue_gradient cursor-pointer'
-        onClick={() => handleTagClick && handleTagClick(post.tag)}
-      >
-        #{post.tag}
-      </p>
+      <div className='w-full flex flex-wrap'>
+        {
+          post?.tag.map(t => (
+            <p
+              className='font-inter mr-1 text-sm blue_gradient cursor-pointer'
+              onClick={() => handleTagClick && handleTagClick(post.tag)}
+            >
+              #{t}
+            </p>
+          ))
+        }
+      </div>
       <p className='my-4 font-satoshi text-sm text-gray-700'>{post.title}</p>
       <p className='font inter text-sm text-gray-600'>{post.body}</p>
       

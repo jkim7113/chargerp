@@ -1,5 +1,6 @@
 import Feed from "@components/Feed";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
         <span className="blue_gradient text-5xl text-center">Learn together, Earn together & Rise together!</span>
       </h1>
       <p className="desc text-center">
-        Sign in with your school account and start exploring!
+        <Link className='text-blue-600' href='/auth/signin'>Sign in</Link> with your school account and start exploring
       </p>
       <Feed /> 
       <div className="flex flex-center flex-wrap mt-5">

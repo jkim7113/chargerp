@@ -4,7 +4,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import User from "@models/user";
 import { connectToDB } from "@utils/db";
 
-export const config = 
+export const authConfig = 
 {
     providers: [
         GoogleProvider({
@@ -41,9 +41,12 @@ export const config =
                 console.log(error);
                 return false;
             }
-        }
+        },
+        async redirect(){
+            return "/";
+        },
     },
 }
-const handler = NextAuth(config);
+const handler = NextAuth(authConfig);
 
 export { handler as GET, handler as POST };

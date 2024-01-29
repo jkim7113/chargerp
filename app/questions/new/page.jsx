@@ -1,25 +1,25 @@
 'use client';
 
 import { useState, useEffect } from 'react'
-import { useSession, signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 import Form from '@components/Form';
 
 const page = () => {
     const router = useRouter();
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
         title: '',
         body: '',
-        tag: '',
+        tag: [],
     });
 
     useEffect(() => {
-        if (!session?.user) signIn();
-    }, [])
+        if (status === "unauthenticated") router.push('/auth/signin');
+    }, [status])
 
     async function createPost(e){
         e.preventDefault();
@@ -47,7 +47,6 @@ const page = () => {
     }
   return (
     <Form title="Ask a question" post={post} setPost={setPost} submitting={submitting} handler={createPost}>
-
     </Form>
   )
 }
