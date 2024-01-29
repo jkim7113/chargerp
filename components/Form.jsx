@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import React, { useState, useEffect, useRef } from 'react'
 
-function TagInput({ post, setPost }) {
+function TagInput({ post, setPost, tagNum, setTagNum }) {
   const subjects = ["Algebra I", "Algebra II", "Biology", "Business", "Calculus", "Chemistry", "Computer Science A", 
   "Computer Science Principles", "Discrete Math", "English", "European History", "French", "Geometry", "German", 
   "Health", "Human Geography", "Macroeconomics", "Personal Finance", "Precalculus", "Physics", "Psychology", "Spanish", 
@@ -28,9 +28,11 @@ function TagInput({ post, setPost }) {
 
   function handleAdd(e){
     //toggler
-    if (post?.tag.includes(e.target.innerText)) return;
-    setPost({...post, tag: [...post.tag, e.target.innerText]});
-    setSelected([...selected, e.target.innerText]);
+    if (!post?.tag.includes(e.target.innerText)){
+      setPost({...post, tag: [...post.tag, e.target.innerText]});
+      setSelected([...selected, e.target.innerText]);
+      setTagNum(tagNum + 1);
+    };
     setRecommendations([]);
     inputRef.current.value = "";
   }
@@ -40,6 +42,7 @@ function TagInput({ post, setPost }) {
     setPost({...post, tag: newTag});
     const newSelected = selected.filter(s => { return s !== e.target.innerText; });
     setSelected(newSelected);
+    setTagNum(tagNum - 1);
   }
 
   return (
@@ -64,6 +67,7 @@ function TagInput({ post, setPost }) {
 }
 
 const Form = ({ title, post, setPost, submitting, handler }) => {
+  const [tagNum, setTagNum] = useState(0);
   return (
     <section className='w-full max-width-full flex-start flex-col mb-20'>
       <h1 className='head_text text-left'>
@@ -86,9 +90,9 @@ const Form = ({ title, post, setPost, submitting, handler }) => {
         </label>
         <label>
           <span className='font-satoshi font-semibold text-base text-gray-700'>
-            Subject
+            Subject {tagNum == 0 ? '' : `(${tagNum})`}
           </span>
-          <TagInput post={post} setPost={setPost}/>
+          <TagInput post={post} setPost={setPost} tagNum={tagNum} setTagNum={setTagNum} />
         </label>
         <div className='flex-end mx-3 gap-4'>
           <Link href='/' className='text-gray-500 text-sm'>Cancel</Link>
