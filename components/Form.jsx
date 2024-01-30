@@ -28,9 +28,10 @@ function TagInput({ post, setPost, tagNum, setTagNum }) {
 
   function handleAdd(e){
     //toggler
-    if (!post?.tag.includes(e.target.innerText)){
-      setPost({...post, tag: [...post.tag, e.target.innerText]});
-      setSelected([...selected, e.target.innerText]);
+    const innerText = e.target.innerText;
+    if (!post?.tag.includes(innerText)){
+      setPost({...post, tag: [...post.tag, innerText]});
+      setSelected([...selected, innerText]);
       setTagNum(tagNum + 1);
     };
     setRecommendations([]);
@@ -38,9 +39,10 @@ function TagInput({ post, setPost, tagNum, setTagNum }) {
   }
 
   function handleDelete(e){
-    const newTag = post?.tag.filter(t => { return t !== e.target.innerText; });
+    const innerText = e.target.innerText.slice(0, -2);
+    const newTag = post?.tag.filter(t => { return t !== innerText; });
     setPost({...post, tag: newTag});
-    const newSelected = selected.filter(s => { return s !== e.target.innerText; });
+    const newSelected = selected.filter(s => { return s !== innerText; });
     setSelected(newSelected);
     setTagNum(tagNum - 1);
   }
@@ -58,7 +60,7 @@ function TagInput({ post, setPost, tagNum, setTagNum }) {
      <div className='w-full mt-4'>
         {
           selected && selected.map((s) => (
-            <span className='subject_selected' onClick={handleDelete} key={s}>{s}</span>
+            <span className='subject_selected' onClick={handleDelete} key={s}>{s} ✕</span>
           ))
         }
      </div>
