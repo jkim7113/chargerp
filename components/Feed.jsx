@@ -14,7 +14,7 @@ const CardList = ({ data }) => {
 }
 
 const Feed = async () => {
-  const response = await fetch('https://www.chargerpeer.com/api/questions', { next: { revalidate: 60 } });
+  const response = await fetch('https://www.chargerpeer.com/api/questions', { next: { revalidate: 30 } });
   const data = await response.json();
 
   return (

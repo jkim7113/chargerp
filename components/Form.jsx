@@ -3,19 +3,21 @@
 import Link from 'next/link'
 import React, { useState, useEffect, useRef } from 'react'
 
-function TagInput({ post, setPost, tagNum, setTagNum }) {
+function TagInput({ post, setPost }) {
   const subjects = ["Algebra I", "Algebra II", "Biology", "Business", "Calculus", "Chemistry", "Computer Science A", 
   "Computer Science Principles", "Discrete Math", "English", "European History", "French", "Geometry", "German", 
   "Health", "Human Geography", "Macroeconomics", "Personal Finance", "Precalculus", "Physics", "Psychology", "Spanish", 
   "Statistics", "U.S. Government", "U.S. History", "World History"];
 
   const [tag, setTag] = useState('');
+  const [tagNum, setTagNum] = useState(0);
   const [selected, setSelected] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const inputRef = useRef('');
 
   useEffect(() => {
     setSelected(post.tag);
+    setTagNum(post.tag.length);
   }, [post.tag]);
 
   useEffect(() => {
@@ -32,7 +34,6 @@ function TagInput({ post, setPost, tagNum, setTagNum }) {
     if (!post?.tag.includes(innerText)){
       setPost({...post, tag: [...post.tag, innerText]});
       setSelected([...selected, innerText]);
-      setTagNum(tagNum + 1);
     };
     setRecommendations([]);
     inputRef.current.value = "";
@@ -44,32 +45,36 @@ function TagInput({ post, setPost, tagNum, setTagNum }) {
     setPost({...post, tag: newTag});
     const newSelected = selected.filter(s => { return s !== innerText; });
     setSelected(newSelected);
-    setTagNum(tagNum - 1);
   }
 
   return (
-    <section className='w-full relative'>
-     <input className='form_input' type='text' placeholder='e.g.  Algebra II' ref={inputRef} onChange={(e) => setTag(e.target.value)} />
-     <div className='absolute w-full rounded-lg backdrop-blur-xl bg-gray-100/95'>
-        {
-          recommendations.map((recommendation) => (
-            <div className='w-full px-3 py-2 rounded-lg text-md text-gray-600 hover:text-blue-600 hover:bg-gray-200' onClick={handleAdd} key={recommendation}>{recommendation}</div>
-          ))
-        }
-     </div>
-     <div className='w-full mt-4'>
-        {
-          selected && selected.map((s) => (
-            <span className='subject_selected' onClick={handleDelete} key={s}>{s} ✕</span>
-          ))
-        }
-     </div>
+    <label>
+      <span className='font-satoshi font-semibold text-base text-gray-700'>
+              Subject {tagNum == 0 ? '' : `(${tagNum})`}
+      </span>
+      <section className='w-full relative'>
+       <input className='form_input' type='text' placeholder='e.g.  Algebra II' ref={inputRef} onChange={(e) => setTag(e.target.value)} />
+       <div className='absolute w-full rounded-lg backdrop-blur-xl bg-gray-100/95'>
+          {
+            recommendations.map((recommendation) => (
+              <div className='w-full px-3 py-2 rounded-lg text-md text-gray-600 hover:text-blue-600 hover:bg-gray-200' onClick={handleAdd} key={recommendation}>{recommendation}</div>
+            ))
+          }
+       </div>
+       <div className='w-full mt-4'>
+          {
+            selected && selected.map((s) => (
+              <span className='subject_selected' onClick={handleDelete} key={s}>{s} ✕</span>
+            ))
+          }
+       </div>
     </section>
+    </label>
   )
 }
 
 const Form = ({ title, post, setPost, submitting, handler }) => {
-  const [tagNum, setTagNum] = useState(0);
+
   return (
     <section className='w-full max-width-full flex-start flex-col mb-20'>
       <h1 className='head_text text-left'>
@@ -90,12 +95,7 @@ const Form = ({ title, post, setPost, submitting, handler }) => {
 
           <textarea className='form_textarea' value={post.body} placeholder="Please be as specific as possible as if you're asking this question to a stranger." onChange={(e) => setPost({...post, body: e.target.value})}></textarea>
         </label>
-        <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>
-            Subject {tagNum == 0 ? '' : `(${tagNum})`}
-          </span>
-          <TagInput post={post} setPost={setPost} tagNum={tagNum} setTagNum={setTagNum} />
-        </label>
+        <TagInput post={post} setPost={setPost} />
         <div className='flex-end mx-3 gap-4'>
           <Link href='/' className='text-gray-500 text-sm'>Cancel</Link>
           <button className='px-5 py-1.5 text-sm bg-centennial rounded-full text-white' type='submit' disabled={submitting}>Submit</button>
